@@ -5,7 +5,7 @@ function Header() {
     return (
         <>
             <h1>Employee Directory</h1>
-            <p>lorem ipsum test</p>
+            <p>Search for an Employee by First or Last Name</p>
 
         </>
     );

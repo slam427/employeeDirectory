@@ -1,31 +1,12 @@
 import React from "react";
 import "./style.css";
 import axios from "axios";
-// import Search from "./Search"
 
 
 class EmployeeTable extends React.Component {
 
     state = {
         sortOrder: "",
-        employees: [],
-        filteredEmployees: []
-    }
-    componentDidMount() {
-        console.log("component mounted")
-        console.log(this.props.searchTerm)
-        if(this.state.employees.length < 1) {
-        axios.get('https://randomuser.me/api/?results=50&nat=us')
-            .then(res => {
-                console.log(res)
-                this.setState({employees: res.data.results, filteredEmployees: res.data.results})
-        })
-        }
-        else {
-            this.setState({filteredEmployees: this.state.employees.filter(employee => {
-                return employee.name.first.toLowerCase().includes(this.props.searchTerm)
-            })})
-        }
     }
 
     sortByName = (isFirstName) => {
@@ -36,7 +17,7 @@ class EmployeeTable extends React.Component {
             nameType = "last"
         }
     
-        let sortedEmployees = this.state.employees.sort((a, b) => {
+        let sortedEmployees = this.props.filteredEmployees.sort((a, b) => {
             if (b.name[nameType].toLowerCase() > a.name[nameType].toLowerCase()) {
                 return -1;
             }
@@ -72,7 +53,7 @@ class EmployeeTable extends React.Component {
                     </tr>
                 </thead>
                 <tbody>
-                    {this.state.filteredEmployees.map(employee => {
+                    {this.props.filteredEmployees.map(employee => {
                         const formattedDate = new Date (employee.dob.date).toLocaleDateString();
                         return (
                         <tr key={employee.id.value}>
